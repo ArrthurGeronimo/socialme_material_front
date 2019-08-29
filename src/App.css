@@ -30,7 +30,12 @@
   box-sizing: border-box;
 }
 /* BOTÕES */
-
+.btn-outline-primary.custom-file-control:before, .btn.btn-outline-primary {
+  border-color: var(--primary);
+  color: var(--primary);
+  background-color: transparent;
+  border: 1px solid var(--primary);
+}
 /* CONTENT GENERIC */
 .content-generic h1{
   margin: 0;
