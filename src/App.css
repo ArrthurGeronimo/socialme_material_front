@@ -31,10 +31,16 @@
 }
 /* BOTÕES */
 .btn-outline-primary.custom-file-control:before, .btn.btn-outline-primary {
-  border-color: var(--primary);
   color: var(--primary);
   background-color: transparent;
   border: 1px solid var(--primary);
+  margin-right: 10px;
+}
+.btn.btn-outline-primary:hover{
+  color: var(--white);
+  background-color: var(--primary);
+  border: 1px solid var(--primary);
+  margin-right: 10px;
 }
 /* CONTENT GENERIC */
 .content-generic h1{

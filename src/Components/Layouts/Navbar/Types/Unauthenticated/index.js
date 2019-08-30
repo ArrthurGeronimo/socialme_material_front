@@ -45,8 +45,8 @@ export default function NavbarUnauthenticated() {
                     </Link>
                 </li>
               </ul>
-              <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Search</button>
-              <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Search</button>
+              <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Registro</button>
+              <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Entrar</button>
             </div>
           </nav>
         </>
