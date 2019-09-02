@@ -33,23 +33,25 @@ export default function FormBeneficiary() {
 
   return (
     <>
-    <div className="row">
-      <div className="col-md-12">
-        <div className="card">
-          <div className="card-body">
-          <h1 className="display-4">Dados</h1>
+      <div className="row">
+        <div className="col-md-12">
+          <div className="card">
+            <div className="card-body">
+              <div className="ui horizontal divider">Dados</div>
+              
+              <div className="form-group">
+                <label className="form-label">Nome do Plano</label>
+                <input 
+                    type="text" 
+                    className="form-control" 
+                    placeholder="Digite o nome do servidor (Ex. Servidor Inicial)"
+                    value={values.nome}
+                    onChange={handleChange('nome')}
+                />
+              </div>
+
+            </div>
           </div>
-        </div>
-        <fieldset className="form-group">
-          <label className="bmd-label-floating">label-floating</label>
-          <input 
-            type="email" 
-            className="form-control"
-            value={values.teste}
-            onChange={handleChange('teste')}
-          />
-          <span className="bmd-help">We'll never share your email with anyone else.</span>
-          </fieldset>
         </div>
       </div>
     </>

@@ -3,7 +3,7 @@ import Navbar from './../../Components/Layouts/Navbar';
 import FormBeneficiary from './Components/FormBeneficiary/index';
 import './style.css';
 
-export default function Register() {
+export default function Register(props) {
   const [values, setValues] = useState({
     visualizacaoAtiva : 'Beneficiário'
   });
@@ -30,7 +30,7 @@ export default function Register() {
 
   return (
     <>
-      <Navbar />
+      <Navbar path={props.match.path} />
       <div className="container">
         <div className="row">
           <div className="col-md-12">

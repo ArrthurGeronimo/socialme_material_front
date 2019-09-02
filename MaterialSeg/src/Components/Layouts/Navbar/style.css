@@ -1,0 +1,12 @@
+/* NAVBAR */
+.navbar ul{
+    display: inline-flex;
+}
+.navbar li{
+    margin: 0px 15px;
+}
+.navbar img{
+    width: auto;
+    height: 35px;
+}
+/* NAVBAR UNAUTHENTICATED */
