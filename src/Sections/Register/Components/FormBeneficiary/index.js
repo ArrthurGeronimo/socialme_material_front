@@ -30,12 +30,13 @@ export default function FormBeneficiary() {
     cidadeNascimento: '',
     //Outros
     maisInformacoes: '',
-    //File
+    //Ações
     paisSelecionado: false,
     estadoSelecionado: false,
     paisNascimentoSelecionado: false,
     estadoNascimentoSelecionado: false,
-    jsonEstadosCidades: []
+    jsonEstadosCidades: [],
+    overlayAberto: false
   });
 //HANDLE CHANGE
   const handleChange = name => event => {
@@ -122,6 +123,13 @@ export default function FormBeneficiary() {
       }
     }
   }
+//OVERLAY QUER SER UM DOADOR
+const abrirOverlayQuerSerUmDoador = () => {
+  setValues({ ...values, overlayAberto: true });
+}
+const fecharOverlayQuerSerUmDoador = () => {
+  setValues({ ...values, overlayAberto: false });
+}
   
   return (
     <>
@@ -465,6 +473,21 @@ export default function FormBeneficiary() {
       <div className="row row100">
         <div className="col-sm-12 col-md-12 col-lg-12">
           <button className="btn btn-outline-primary my-2 my-sm-0 btn-registro-beneficiario" type="submit">Registrar</button>
+        </div>
+      </div>
+
+      <button className="btn btn-outline-primary my-2 my-sm-0 btn-registro-beneficiario" type="submit" onClick={abrirOverlayQuerSerUmDoador}>Registrar</button>
+
+      <div 
+        className={"overlay "}
+        style={values.overlayAberto ? {height: '100%'} : {height: '0%'}}
+      >
+        <button className="closebtn" onClick={fecharOverlayQuerSerUmDoador}>FECHAR</button>
+        <div className="overlay-content">
+          <a href="#">About</a>
+          <a href="#">Services</a>
+          <a href="#">Clients</a>
+          <a href="#">Contact</a>
         </div>
       </div>
 
