@@ -59,12 +59,14 @@
     left: 0;
     background-color: rgb(0,0,0);
     background-color: rgba(0,0,0, 0.9);
+    background-color: rgba(213, 0, 0, 1);
+    background-color: var(--dark);
     overflow-x: hidden;
     transition: 0.5s;
 }
 .overlay-content {
     position: relative;
-    top: 25%;
+    top: 15%; /* 25% */
     width: 100%;
     text-align: center;
     margin-top: 30px;
@@ -86,6 +88,29 @@
     right: 45px;
     font-size: 60px;
 }
+.overlay .closebtn span {
+    border: none;
+    cursor: pointer;
+}
+.overlay .closebtn span:checked {
+    border: none;
+    z-index: 1;
+    color: none;
+    background: none;
+}
+.overlay .closebtn span:focus {
+    border: none;
+    z-index: 1;
+    color: none;
+    background: none;
+}
+.overlay .closebtn i {
+    font-size: 20pt;
+    color: var(--white);
+}
+.overlay .closebtn i:hover {
+    color: var(--dark);
+}
 @media screen and (max-height: 450px) {
     .overlay a {font-size: 20px}
     .overlay .closebtn {
@@ -93,4 +118,53 @@
         top: 15px;
         right: 35px;
     }
+}
+.overlay-content .col-custom{
+    padding: 0px 50px;
+    text-align: center;
+    color: var(--white);
+}
+.overlay-content img{
+    width: 40%;
+    margin: 0px auto 20px;
+}
+.overlay-content .imagemSemente{
+    width: 40%;
+    margin: 0px;
+    float: right;
+}
+.containerBotoesQuerNaoQuer{
+    align-content: end;
+    display: grid;
+    height: 250px; 
+    width: 50%;
+    margin: 0px auto;
+}
+.btn-quero-ser-um-doador{
+    padding: 20px;
+    font-size: 16pt;
+    background-color: var(--primary);
+    color: var(--white);
+    margin-bottom: 20px;
+    border: 2px solid var(--dark);
+}
+.btn-quero-ser-um-doador:hover{
+    padding: 20px;
+    font-size: 16pt;
+    background-color: var(--primary);
+    color: var(--white);
+    border: 2px solid var(--white);
+}
+.btn-nao-quero-ser-um-doador{
+    padding: 15px;
+    font-size: 14pt;
+    border-color: var(--white);
+    color: var(--white);
+}
+.btn-nao-quero-ser-um-doador:hover{
+    padding: 15px;
+    font-size: 14pt;
+    border-color: var(--white);
+    color: var(--primary);
+    background-color: var(--white);
 }

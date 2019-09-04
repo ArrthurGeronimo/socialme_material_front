@@ -1,8 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import ReactFlagsSelect from 'react-flags-select';
-import flagBrazil from './../../../../Assets/Images/logo.png';
+import api from './../../../../Services/api';
 import { dataBrasileiraMask } from './../../../../Services/masks';
+import imagem1 from './../../../../Assets/Images/overlayDoador1.png';
+import imagem2 from './../../../../Assets/Images/overlayDoador2.png';
+import imagem3 from './../../../../Assets/Images/overlayDoador3.png';
+import imagem1Hover from './../../../../Assets/Images/overlayDoador1Hover.png';
+import imagem2Hover from './../../../../Assets/Images/overlayDoador2Hover.png';
+import imagem3Hover from './../../../../Assets/Images/overlayDoador3Hover.png';
+import isometric from './../../../../Assets/Images/isometric.png';
+import isometric2 from './../../../../Assets/Images/isometric2.png';
 
 export default function FormBeneficiary() {
   const [values, setValues] = useState({
@@ -30,13 +37,15 @@ export default function FormBeneficiary() {
     cidadeNascimento: '',
     //Outros
     maisInformacoes: '',
+    doador: '',
     //Ações
     paisSelecionado: false,
     estadoSelecionado: false,
     paisNascimentoSelecionado: false,
     estadoNascimentoSelecionado: false,
     jsonEstadosCidades: [],
-    overlayAberto: false
+    overlayAberto: false,
+    mouseEnterDoador: false
   });
 //HANDLE CHANGE
   const handleChange = name => event => {
@@ -46,7 +55,12 @@ export default function FormBeneficiary() {
         setValues({ ...values, [name]: event.target.value });
     }
   };
-
+//SEMPRE
+useEffect(() => {
+  if(values.overlayAberto){
+    cadastrarBeneficiario();
+  }
+}, [values.doador]);
 //ÚNICA VEZ
   useEffect(() => {
     lerEstadoCidades()
@@ -72,9 +86,8 @@ export default function FormBeneficiary() {
   }, [values.estado]);
 //QUANDO MUDAR O PAÍS NASCIMENTO
   useEffect(() => {
-    setValues({ ...values, paisNascimentoSelecionado: true });
     if(values.paisNascimento === "Brasil"){
-      setValues({ ...values, nacionalidade: 'Brasileiro(a)' });
+      setValues({ ...values, paisNascimentoSelecionado: true, nacionalidade: 'Brasileiro(a)' });
     }
   }, [values.paisNascimento]);
 //QUANDO MUDAR O ESTADO NASCIMENTO
@@ -124,13 +137,69 @@ export default function FormBeneficiary() {
     }
   }
 //OVERLAY QUER SER UM DOADOR
-const abrirOverlayQuerSerUmDoador = () => {
-  setValues({ ...values, overlayAberto: true });
+  const abrirOverlayQuerSerUmDoador = () => {
+    setValues({ ...values, overlayAberto: true });
+  }
+  const fecharOverlayQuerSerUmDoador = () => {
+    setValues({ ...values, overlayAberto: false });
+  }
+//ANIMAÇÃO OVERLAY
+  const mouseEnterDoador = () => {
+    setValues({ ...values, mouseEnterDoador: true });
+  }
+  const mouseOutDoador = () => {
+    setValues({ ...values, mouseEnterDoador: false });
+  }
+//CADASTRO
+  const cadastrarComoDoador = () => {
+    setValues({ ...values, doador: true });
+  }
+  const cadastrarSemDoador = () => {
+    setValues({ ...values, doador: false });
+  }
+  const cadastrarBeneficiario = () => {
+    const obj = {
+      dados: {
+        nome: values.nome,
+        nomeSocial: values.nomeSocial,
+        sexo: values.sexo,
+        estadoCivil: values.estadoCivil,
+        rg: values.rg,
+        cpf: values.cpf,
+        cns: values.cns,
+        pis: values.pis,
+        escolaridade: values.escolaridade,
+        profissao: values.profissao,
+        telefoneFixo: values.telefoneFixo,
+        celular: values.celular,
+        email: values.email,
+        pais: values.pais,
+        cidade: values.cidade,
+        estado: values.estado,
+        nascimento: {
+          data: values.dataNascimento,  
+          nacionalidade: values.nacionalidade,
+          pais: values.paisNascimento,
+          estado: values.estadoNascimento,
+          cidade: values.cidadeNascimento
+        }
+      },
+      maisInformacoes: values.maisInformacoes,
+      doador: {
+        status: values.doador
+      }
+    };
+
+  console.log(obj);
+  api.post('/person', obj)
+  .then(res => {
+      console.log(res);
+    })
+    .catch(function (error) {
+      console.log(error);
+    })
 }
-const fecharOverlayQuerSerUmDoador = () => {
-  setValues({ ...values, overlayAberto: false });
-}
-  
+
   return (
     <>
       <div className="card">
@@ -297,16 +366,16 @@ const fecharOverlayQuerSerUmDoador = () => {
                 </select>
               </div>
             </div>
-            {/* PROFISSÃO */}
+            {/* EMAIL */}
             <div className="col-sm-12 col-md-3 col-lg-3">
               <div className="form-group">
-                <label className="form-label">Profissão</label>
+                <label className="form-label">Email</label>
                 <input 
                   type="text" 
                   className="form-control" 
-                  placeholder="Digite sua Profissão"
-                  value={values.profissao}
-                  onChange={handleChange('profissao')}
+                  placeholder="Digite sua Email"
+                  value={values.email}
+                  onChange={handleChange('email')}
                 />
               </div>
             </div>
@@ -337,7 +406,7 @@ const fecharOverlayQuerSerUmDoador = () => {
               </div>
             </div>
             {/* PAÍS */}
-            <div className="col-sm-12 col-md-4 col-lg-4">
+            <div className="col-sm-12 col-md-3 col-lg-3">
               <div className="form-group">
                 <label className="form-label">País</label>
                 <select 
@@ -351,7 +420,7 @@ const fecharOverlayQuerSerUmDoador = () => {
               </div>
             </div>
             {/* ESTADO */}
-            <div className="col-sm-12 col-md-4 col-lg-4">
+            <div className="col-sm-12 col-md-3 col-lg-3">
               <div className="form-group">
                 <label className="form-label">Estado</label>
                 <select 
@@ -364,7 +433,7 @@ const fecharOverlayQuerSerUmDoador = () => {
               </div>
             </div>
             {/* CIDADE */}
-            <div className="col-sm-12 col-md-4 col-lg-4">
+            <div className="col-sm-12 col-md-3 col-lg-3">
               <div className="form-group">
                 <label className="form-label">Cidade</label>
                 <select 
@@ -376,11 +445,22 @@ const fecharOverlayQuerSerUmDoador = () => {
                 </select>
               </div>
             </div>
-
+            {/* PROFISSÃO */}
+            <div className="col-sm-12 col-md-3 col-lg-3">
+              <div className="form-group">
+                <label className="form-label">Profissão</label>
+                <input 
+                  type="text" 
+                  className="form-control" 
+                  placeholder="Digite sua Profissão"
+                  value={values.profissao}
+                  onChange={handleChange('profissao')}
+                />
+              </div>
+            </div>
             <div className="col-12 col-sm-12 col-md-12 col-lg-12">
               <div className="ui horizontal divider">Informações do Nascimento</div>
             </div>
-
             {/* PAÍS NASCIMENTO */}
             <div className="col-sm-12 col-md-4 col-lg-4">
               <div className="form-group">
@@ -447,11 +527,9 @@ const fecharOverlayQuerSerUmDoador = () => {
                 />
               </div>
             </div>
-
             <div className="col-12 col-sm-12 col-md-12 col-lg-12">
               <div className="ui horizontal divider">Mais Informações</div>
             </div>
-
             {/* MAIS INFORMAÇÕES */}
             <div className="col-sm-12 col-md-12 col-lg-12">
               <div className="form-group">
@@ -472,26 +550,61 @@ const fecharOverlayQuerSerUmDoador = () => {
 
       <div className="row row100">
         <div className="col-sm-12 col-md-12 col-lg-12">
-          <button className="btn btn-outline-primary my-2 my-sm-0 btn-registro-beneficiario" type="submit">Registrar</button>
+          <button className="btn btn-outline-primary my-2 my-sm-0 btn-registro-beneficiario" onClick={abrirOverlayQuerSerUmDoador}>Registrar</button>
         </div>
       </div>
-
-      <button className="btn btn-outline-primary my-2 my-sm-0 btn-registro-beneficiario" type="submit" onClick={abrirOverlayQuerSerUmDoador}>Registrar</button>
 
       <div 
         className={"overlay "}
         style={values.overlayAberto ? {height: '100%'} : {height: '0%'}}
       >
-        <button className="closebtn" onClick={fecharOverlayQuerSerUmDoador}>FECHAR</button>
+        <label className="selectgroup-item closebtn" onClick={fecharOverlayQuerSerUmDoador}>
+          <input type="radio" name="icon-input" className="selectgroup-input"/>
+          <span><i className="fe fe-x"></i></span>
+        </label>
         <div className="overlay-content">
-          <a href="#">About</a>
-          <a href="#">Services</a>
-          <a href="#">Clients</a>
-          <a href="#">Contact</a>
+          <div className="row">
+            <div className="col-sm-12 col-md-4 col-lg-4 col-custom">
+              {values.mouseEnterDoador ?
+                <img src={imagem1Hover} alt="imagem1" />
+              :
+                <img src={imagem1} alt="imagem1" />
+              }
+              <div>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam maximus porta felis sed porttitor. Quisque vehicula lorem eu tincidunt aliquet. Cras efficitur nisl id sagittis fringilla. Nunc quis sapien nec orci tempor laoreet sed id lacus. Nunc iaculis ornare semper. 
+              </div>
+            </div>
+            <div className="col-sm-12 col-md-4 col-lg-4 col-custom">
+            {values.mouseEnterDoador ?
+                <img src={imagem2Hover} alt="imagem2" />
+              :
+                <img src={imagem2} alt="imagem2" />
+              }
+              <div>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam maximus porta felis sed porttitor. Quisque vehicula lorem eu tincidunt aliquet. Cras efficitur nisl id sagittis fringilla. Nunc quis sapien nec orci tempor laoreet sed id lacus. Nunc iaculis ornare semper. 
+              </div>
+            </div>
+            <div className="col-sm-12 col-md-4 col-lg-4 col-custom">
+            {values.mouseEnterDoador ?
+                <img src={imagem3Hover} alt="imagem3" />
+              :
+                <img src={imagem3} alt="imagem3" />
+              }
+              <div>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam maximus porta felis sed porttitor. Quisque vehicula lorem eu tincidunt aliquet. Cras efficitur nisl id sagittis fringilla. Nunc quis sapien nec orci tempor laoreet sed id lacus. Nunc iaculis ornare semper. 
+              </div>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-sm-12 col-md-12 col-lg-12 col-custom">
+              <div className="containerBotoesQuerNaoQuer">
+                <button className="btn btn-quero-ser-um-doador" onMouseEnter={mouseEnterDoador} onMouseLeave={mouseOutDoador} onClick={cadastrarComoDoador}>Quero ser um doador!</button>
+                <button className="btn btn-nao-quero-ser-um-doador" onClick={cadastrarSemDoador}>Não, obrigado</button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-
-      
     </>
   );
 }
