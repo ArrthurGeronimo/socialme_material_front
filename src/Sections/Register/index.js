@@ -7,11 +7,12 @@ export default function Register(props) {
   const [values, setValues] = useState({
     visualizacaoAtiva : 'Beneficiário'
   });
+  /*
   useEffect(() => {
     console.log('useEffect');
     console.log(values);
   }, [values.visualizacaoAtiva]);
-
+  */
   const handleChange = name => event => {
     this.setValues({ ...values, [name]: event.target.value });
   };

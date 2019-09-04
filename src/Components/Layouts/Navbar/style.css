@@ -1,6 +1,7 @@
 /* NAVBAR */
 .navbar{
     background-color: var(--white);
+    box-shadow: 1px 1px 5px var(--dark);
 }
 .navbar a{
     color: var(--primary);

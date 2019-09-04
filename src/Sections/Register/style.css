@@ -20,10 +20,10 @@
     box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
 }
 .bg-tab-registro i{
-    margin-right: 0px;
+    margin-right: 0px !important;
     line-height: 0;
-    font-size: 2rem;
-    width: auto;
+    font-size: 2rem !important;
+    width: auto !important;
     vertical-align: baseline;
     display: inline-block;
 }
@@ -42,4 +42,10 @@
 }
 .bg-tab-registro .nav-item{
     padding: 20px;
+}
+
+/* FORM REGISTRO BENEFICIARIO */
+.btn-registro-beneficiario{
+    margin-bottom: 50px !important;
+    float: right;
 }

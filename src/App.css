@@ -29,6 +29,12 @@
   margin: 0px;
   box-sizing: border-box;
 }
+body {
+  background-color: var(--light);
+}
+.row100{
+  width: 100%;
+}
 /* BOTÕES */
 .btn-outline-primary.active.custom-file-control:before, .btn-outline-primary.custom-file-control:active:before, .btn-outline-primary.custom-file-control:focus:before, .btn-outline-primary.custom-file-control:hover:before, .btn-outline-primary.focus.custom-file-control:before, .btn.btn-outline-primary.active, .btn.btn-outline-primary.focus, .btn.btn-outline-primary:active, .btn.btn-outline-primary:focus, .btn.btn-outline-primary:hover, .open>.btn-outline-primary.dropdown-toggle.custom-file-control:before, .open>.btn.btn-outline-primary.dropdown-toggle {
   color: var(--primary);
@@ -75,7 +81,19 @@
   color: #555;
   transform: translateX(-50%) translateY(-50%);
 }
-/* ROW */
-.row{
-  display: block;
+/* SELECT FLAGS */
+.flag-select .filterBox input {
+  line-height: 1.5;
+  font-family: sans-serif;
+  border: 1px solid var(--dark)
+}
+/* CUSTOM SELECT */
+select.custom-select option {
+  background-repeat:no-repeat;
+  background-position:bottom left;
+  padding-left:30px;
+}
+/* SELECT DISABLE */
+.select-disable{
+  cursor: not-allowed;
 }
