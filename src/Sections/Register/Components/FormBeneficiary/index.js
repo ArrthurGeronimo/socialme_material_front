@@ -11,6 +11,11 @@ import imagem3Hover from './../../../../Assets/Images/overlayDoador3Hover.png';
 import isometric from './../../../../Assets/Images/isometric.png';
 import isometric2 from './../../../../Assets/Images/isometric2.png';
 
+import pngBonequinho from './../../../../Assets/Images/pngBonequinho.png';
+import gifBonequinho from './../../../../Assets/Images/gifBonequinho.gif';
+import pngMaosCoracao from './../../../../Assets/Images/pngMaosCoracao.png';
+import gifMaosCoracao from './../../../../Assets/Images/gifMaosCoracao.gif';
+
 export default function FormBeneficiary() {
   const [values, setValues] = useState({
     nome: '',
@@ -566,9 +571,9 @@ useEffect(() => {
           <div className="row">
             <div className="col-sm-12 col-md-4 col-lg-4 col-custom">
               {values.mouseEnterDoador ?
-                <img src={imagem1Hover} alt="imagem1" />
+                <img src={gifBonequinho} alt="imagem1" />
               :
-                <img src={imagem1} alt="imagem1" />
+                <img src={pngBonequinho} alt="imagem1" />
               }
               <div>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam maximus porta felis sed porttitor. Quisque vehicula lorem eu tincidunt aliquet. Cras efficitur nisl id sagittis fringilla. Nunc quis sapien nec orci tempor laoreet sed id lacus. Nunc iaculis ornare semper. 
@@ -576,7 +581,7 @@ useEffect(() => {
             </div>
             <div className="col-sm-12 col-md-4 col-lg-4 col-custom">
             {values.mouseEnterDoador ?
-                <img src={imagem2Hover} alt="imagem2" />
+                <img src={imagem2} alt="imagem2" />
               :
                 <img src={imagem2} alt="imagem2" />
               }
@@ -586,9 +591,9 @@ useEffect(() => {
             </div>
             <div className="col-sm-12 col-md-4 col-lg-4 col-custom">
             {values.mouseEnterDoador ?
-                <img src={imagem3Hover} alt="imagem3" />
+                <img src={gifMaosCoracao} alt="imagem3" />
               :
-                <img src={imagem3} alt="imagem3" />
+                <img src={pngMaosCoracao} alt="imagem3" />
               }
               <div>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam maximus porta felis sed porttitor. Quisque vehicula lorem eu tincidunt aliquet. Cras efficitur nisl id sagittis fringilla. Nunc quis sapien nec orci tempor laoreet sed id lacus. Nunc iaculis ornare semper. 
