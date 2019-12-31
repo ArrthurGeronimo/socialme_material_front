@@ -32,10 +32,60 @@
 body {
   background-color: var(--light);
 }
+a{
+  color: var(--primary);
+  opacity: 0.8;
+}
+a:hover{
+  color: var(--primary);
+  opacity: 1;
+}
 .row100{
   width: 100%;
 }
 /* BOTÕES */
+.btn-primary{
+  color: var(--white);
+  background-color: var(--primary);
+  border-color: var(--primary);
+  opacity: 0.8;
+}
+.btn-success{
+  color: var(--white);
+  background-color: var(--success);
+  border-color: var(--success);
+  opacity: 0.8;
+}
+.btn-info{
+  color: var(--white);
+  background-color: var(--info);
+  border-color: var(--info);
+  opacity: 0.8;
+}
+.btn-warning{
+  color: var(--white);
+  background-color: var(--warning);
+  border-color: var(--warning);
+  opacity: 0.8;
+}
+.btn-danger{
+  color: var(--white);
+  background-color: var(--danger);
+  border-color: var(--danger);
+  opacity: 0.8;
+}
+.btn-dark{
+  color: var(--white);
+  background-color: var(--dark);
+  border-color: var(--dark);
+  opacity: 0.8;
+}
+.btn-primary:hover{
+  color: var(--white);
+  background-color: var(--primary);
+  border-color: var(--primary);
+  opacity: 1;
+}
 .btn-outline-primary.active.custom-file-control:before, .btn-outline-primary.custom-file-control:active:before, .btn-outline-primary.custom-file-control:focus:before, .btn-outline-primary.custom-file-control:hover:before, .btn-outline-primary.focus.custom-file-control:before, .btn.btn-outline-primary.active, .btn.btn-outline-primary.focus, .btn.btn-outline-primary:active, .btn.btn-outline-primary:focus, .btn.btn-outline-primary:hover, .open>.btn-outline-primary.dropdown-toggle.custom-file-control:before, .open>.btn.btn-outline-primary.dropdown-toggle {
   color: var(--primary);
   background-color: hsla(0,0%,60%,.2);
@@ -80,6 +130,33 @@ body {
   left: 50%;
   color: #555;
   transform: translateX(-50%) translateY(-50%);
+}
+.content-generic-blog{
+  text-align: center;
+  margin: 50px 0px 0px;
+}
+.content-generic-blog textarea{
+  width: 80%;
+  margin: 0px auto;
+}
+.content-generic-blog .form-label{
+  margin: 20px 0px;
+}
+.content-generic-blog .btn{
+  margin: 0px 10px;
+}
+.content-generic-blog .btn-mostrar{
+  margin: 20px 0px;
+  background-color: var(--dark);
+  border: 1px solid var(--dark);
+}
+.content-generic-blog .btn-disable{
+  cursor: not-allowed;
+  opacity: 0.5;
+  border: 1px solid var(--danger);
+}
+.content-generic-blog .activeAlert{
+  border: 2px solid var(--dark);
 }
 /* SELECT FLAGS */
 .flag-select .filterBox input {

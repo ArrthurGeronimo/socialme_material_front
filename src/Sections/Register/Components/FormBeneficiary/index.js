@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Redirect } from 'react-router-dom';
 import axios from 'axios';
 import api from './../../../../Services/api';
 import { dataBrasileiraMask } from './../../../../Services/masks';
@@ -15,6 +16,8 @@ import pngBonequinho from './../../../../Assets/Images/pngBonequinho.png';
 import gifBonequinho from './../../../../Assets/Images/gifBonequinho.gif';
 import pngMaosCoracao from './../../../../Assets/Images/pngMaosCoracao.png';
 import gifMaosCoracao from './../../../../Assets/Images/gifMaosCoracao.gif';
+
+import Alert from './../../../../Components/Alert';
 
 export default function FormBeneficiary() {
   const [values, setValues] = useState({
@@ -42,7 +45,9 @@ export default function FormBeneficiary() {
     cidadeNascimento: '',
     //Outros
     maisInformacoes: '',
-    doador: '',
+    beneficiaria: false,
+    doadora: false,
+    fornecedora: false,
     //Ações
     paisSelecionado: false,
     estadoSelecionado: false,
@@ -50,17 +55,31 @@ export default function FormBeneficiary() {
     estadoNascimentoSelecionado: false,
     jsonEstadosCidades: [],
     overlayAberto: false,
-    mouseEnterDoador: false
+    mouseEnterDoador: false,
+    mostrarAlerta: false,
+    typeAlerta: '',
+    positionAlert: '',
+    textAlert: '',
+    redirect: false
   });
 //HANDLE CHANGE
   const handleChange = name => event => {
-    if(name === 'dataNascimento'){
-      setValues({ ...values, [name]: dataBrasileiraMask(event.target.value) });
-    }else{
-        setValues({ ...values, [name]: event.target.value });
+    switch(name) {
+      case 'dataNascimento':
+        return setValues({ ...values, [name]: dataBrasileiraMask(event.target.value) });
+      case 'beneficiaria':
+      case 'doadora':
+      case 'fornecedora':
+        if(event.target.value === 'true'){
+          return setValues({ ...values, [name]: true });
+        }else if(event.target.value === 'false'){
+          return setValues({ ...values, [name]: false });
+        } 
+      default:
+        return setValues({ ...values, [name]: event.target.value });
     }
   };
-//SEMPRE
+//QUANDO ALTERA O STATUS DE DOADOR
 useEffect(() => {
   if(values.overlayAberto){
     cadastrarBeneficiario();
@@ -190,23 +209,65 @@ useEffect(() => {
         }
       },
       maisInformacoes: values.maisInformacoes,
-      doador: {
-        status: values.doador
+      beneficiaria: {
+        status: values.beneficiaria
+      },
+      doadora: {
+        status: values.doadora
+      },
+      fornecedora: {
+        status: values.fornecedora
       }
     };
 
   console.log(obj);
   api.post('/person', obj)
   .then(res => {
-      console.log(res);
+      //console.log(res);
+      if(res.data.status === 'success'){
+        setValues({ 
+          ...values, 
+          mostrarAlerta: true,
+          typeAlerta: 'success',
+          positionAlert: 'top-right',
+          textAlert: 'Pessoa Física Cadastrada com Sucesso',
+        });
+        setTimeout(
+          function() {
+            setValues({ 
+              ...values, 
+              redirect: true
+            });
+          },
+          3000
+        );
+      }
     })
     .catch(function (error) {
       console.log(error);
     })
 }
 
+// Redirecionamento para a página de LOGIN
+  const renderRedirect = () => {
+    if (values.redirect) {
+      return <Redirect to={{
+        pathname: '/entrar'
+      }} />
+    }
+  }
+// Mostrar Alert
+const renderAlerta = () => {
+  if (values.mostrarAlerta) {
+    return <Alert type={values.typeAlerta} position={values.positionAlert} text={values.textAlert} />
+  }
+}
+
   return (
     <>
+      {renderRedirect()}
+      {renderAlerta()}
+      {/* CARD - DADOS */}
       <div className="card">
         <div className="card-body">
           <div className="row">
@@ -256,11 +317,11 @@ useEffect(() => {
                     <input 
                       type="checkbox" 
                       className="custom-control-input"
-                      checked={values.sexo === 'Outro' ? true : false}
-                      value="Outro"
+                      checked={values.sexo === 'Indefinido' ? true : false}
+                      value="Indefinido"
                       onChange={handleChange('sexo')} 
                     />
-                    <span className="custom-control-label">Outro</span>
+                    <span className="custom-control-label">Indefinido</span>
                   </label>
                 </div>
               </div>
@@ -552,13 +613,107 @@ useEffect(() => {
           </div> {/* /row */}
         </div> {/* /card-body */}
       </div> {/* /card */}
-
-      <div className="row row100">
-        <div className="col-sm-12 col-md-12 col-lg-12">
-          <button className="btn btn-outline-primary my-2 my-sm-0 btn-registro-beneficiario" onClick={abrirOverlayQuerSerUmDoador}>Registrar</button>
+      {/* CARD - DOADOR/FORNECEDOR */}
+      <div className="card">
+        <div className="card-body">
+          <div className="row">
+            {/* BENEFICIÁRIA */}
+            <div className="col-sm-12 col-md-4 col-lg-4">
+              <div className="form-group">
+                <div className="form-label">Você quer ser beneficiário?</div>
+                <div className="custom-controls-stacked">
+                  <label className="custom-control custom-radio custom-control-inline">
+                    <input 
+                      type="checkbox" 
+                      className="custom-control-input"
+                      checked={values.beneficiaria ? true : false}
+                      value={true}
+                      onChange={handleChange('beneficiaria')} 
+                    />
+                    <span className="custom-control-label">Sim</span>
+                  </label>
+                  <label className="custom-control custom-radio custom-control-inline">
+                  <input 
+                      type="checkbox" 
+                      className="custom-control-input"
+                      checked={values.beneficiaria ? false : true}
+                      value={false}
+                      onChange={handleChange('beneficiaria')} 
+                    />
+                    <span className="custom-control-label">Não</span>
+                  </label>
+                </div>
+              </div>
+            </div>
+            {/* DOADOR */}
+            <div className="col-sm-12 col-md-4 col-lg-4">
+              <div className="form-group">
+                <div className="form-label">Você quer ser doador?</div>
+                <div className="custom-controls-stacked">
+                  <label className="custom-control custom-radio custom-control-inline">
+                    <input 
+                      type="checkbox" 
+                      className="custom-control-input"
+                      checked={values.doadora ? true : false}
+                      value={true}
+                      onChange={handleChange('doadora')} 
+                    />
+                    <span className="custom-control-label">Sim</span>
+                  </label>
+                  <label className="custom-control custom-radio custom-control-inline">
+                  <input 
+                      type="checkbox" 
+                      className="custom-control-input"
+                      checked={values.doadora ? false : true}
+                      value={false}
+                      onChange={handleChange('doadora')} 
+                    />
+                    <span className="custom-control-label">Não</span>
+                  </label>
+                </div>
+              </div>
+            </div>
+            {/* FORNECEDOR */}
+            <div className="col-sm-12 col-md-4 col-lg-4">
+              <div className="form-group">
+                <div className="form-label">Você quer ser fornecedor?</div>
+                <div className="custom-controls-stacked">
+                  <label className="custom-control custom-radio custom-control-inline">
+                    <input 
+                      type="checkbox" 
+                      className="custom-control-input"
+                      checked={values.fornecedora ? true : false}
+                      value={true}
+                      onChange={handleChange('fornecedora')} 
+                    />
+                    <span className="custom-control-label">Sim</span>
+                  </label>
+                  <label className="custom-control custom-radio custom-control-inline">
+                  <input 
+                      type="checkbox" 
+                      className="custom-control-input"
+                      checked={values.fornecedora ? false : true}
+                      value={false}
+                      onChange={handleChange('fornecedora')} 
+                    />
+                    <span className="custom-control-label">Não</span>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-
+      {/* BOTÃO REGISTRO */}
+      <div className="row row100">
+        <div className="col-sm-12 col-md-12 col-lg-12">
+          {/* 
+            <button className="btn btn-outline-primary my-2 my-sm-0 btn-registro-beneficiario" onClick={abrirOverlayQuerSerUmDoador}>Registrar</button>
+          */}
+          <button className="btn btn-outline-primary my-2 my-sm-0 btn-registro-beneficiario" onClick={cadastrarBeneficiario}>Registrar</button>
+        </div>
+      </div>
+      {/* OVERLAY */}
       <div 
         className={"overlay "}
         style={values.overlayAberto ? {height: '100%'} : {height: '0%'}}

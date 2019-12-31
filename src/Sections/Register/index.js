@@ -39,12 +39,12 @@ export default function Register(props) {
               <li className={"nav-item "+(values.visualizacaoAtiva === 'Beneficiário' ? 'active' : '')}
               onClick={() => alternarVisualizacao('Beneficiário')}>
                 <i className="far fa-smile"></i>
-                <a className="nav-link" href="#">Beneficiário</a>
+                <a className="nav-link" href="#">Pessoa Física</a>
               </li>
               <li className={"nav-item "+(values.visualizacaoAtiva === 'Fornecedora' ? 'active' : '')}
               onClick={() => alternarVisualizacao('Fornecedora')}>
                 <i className="far fa-handshake"></i>
-                <a className="nav-link" href="#">Fornecedora</a>
+                <a className="nav-link" href="#">Pessoa Jurídica</a>
               </li>
             </ul>
           </div>
